@@ -26,8 +26,10 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
 
+    <!-- slot -->
+    <slot name='head' />
+
     <!-- SEO対策とメタタグ -->
-    <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     {noindex && <meta name="robots" content="noindex" />}

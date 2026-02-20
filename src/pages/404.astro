@@ -3,8 +3,11 @@ import HeaderLayout from '../layouts/HeaderLayout.astro';
 import CurrentPathOn404 from '../components/LayoutUI/CurrentPathOn404.svelte';
 ---
 
+<Fragment slot='head'>
+  <title>404 Not Found | Wave Graphics</title>
+</Fragment>
+
 <HeaderLayout
-  title="404 Not Found | Wave Graphics"
   noindex={true}
   hideCurrentPath={true}
 >

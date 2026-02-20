@@ -4,6 +4,10 @@ import HeaderLayout from "../layouts/HeaderLayout.astro";
 import SearchSlot from "../components/SearchUI/SearchSlot.vue";
 ---
 
+<Fragment slot='head'>
+  <title>検索 | Wave Graphics</title>
+</Fragment>
+
 <HeaderLayout>
   <h2 data-pagefind-meta="title">検索</h2>
   <p>見つからない場合は，検索語句を細かく区切ってみてください．</p>

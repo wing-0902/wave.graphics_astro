@@ -6,8 +6,11 @@ const policyEntries = await getCollection('policy');
 policyEntries.sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime()); // 日付順
 ---
 
+<Fragment slot='head'>
+  <title>利用規約一覧 | Wave Graphics</title>
+</Fragment>
+
 <HeaderLayout
-  title="利用規約一覧 | Wave Graphics"
   description="Wave Graphics Appでは，コンテンツの適正かつ有益な利用のため，いくつかのルールを儲けさせていただいております．"
 >
   <h2 data-pagefind-meta="title">ご利用規約一覧</h2>

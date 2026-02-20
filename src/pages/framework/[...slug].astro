@@ -19,8 +19,11 @@ const titleOnHeader = entry.data.title + ' | Wave Graphics';
 import AboutWidget from '../../components/FrameworkUI/AboutWidget.svelte';
 ---
 
+<Fragment slot='head'>
+  <title>{titleOnHeader}</title>
+</Fragment>
+
 <HeaderLayout
-  title={titleOnHeader}
   description={entry.data.description}
   anotherFavicon={entry.data.icon}
   ogType='article'
