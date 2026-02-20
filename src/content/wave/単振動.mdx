@@ -4,6 +4,7 @@ description: 単振動は，波の基本です．さっそく可視化してみ�
 pubDate: 2025-09-28T16:00:00+09:00
 num: 11000
 ---
+
 import OscillationCanvas from '../../components/WaveCanvas/単振動/canvas.tsx';
 
 <OscillationCanvas client:load />
@@ -27,20 +28,24 @@ import OscillationCanvas from '../../components/WaveCanvas/単振動/canvas.tsx'
 
 単振動は，**正弦関数**や余弦関数で記述できる．
 変位$x(t)$（元の位置からのずれ）は次のように表される．
+
 $$
 x ( t ) = A \sin ( \omega t + \phi )
 $$
 
 ここで，
+
 - $A$：振幅（平衡点からの最大変位）
 - $\omega$：角振動数（円運動に直した時に１秒間にどれだけ回転するか）
 - $t$：時間
 - $\phi$：初期位相（$t=0$における変異を決定するための定数）
 
 さらに，先ほどの変位の式を$t$で微分すると，速度$v(t)$や加速度$a(t)$が求められる．
+
 $$
 v ( t ) = A  \omega \cos ( \omega t + \phi )
 $$
+
 $$
 a(t) = - A \omega ^2 \sin ( \omega t + \phi) = - \omega ^2 x(t)
 $$

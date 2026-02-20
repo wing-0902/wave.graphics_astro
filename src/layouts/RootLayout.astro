@@ -13,13 +13,19 @@ interface Props {
 import 'katex/dist/katex.min.css';
 
 // Propsでメタタグを受け渡し
-const { ogType = 'website', noindex = false, anotherFavicon = 'https://wave.graphics/hotlink-ok/icons/favicon.png', title = 'Wave Graphics', description = 'Wave Graphicsアプリへようこそ！このアプリでは，物理の授業で出てきそうな，波の模型をデジタル化し，ウェブで閲覧可能にしたものです．' } = Astro.props;
+const {
+  ogType = 'website',
+  noindex = false,
+  anotherFavicon = 'https://wave.graphics/hotlink-ok/icons/favicon.png',
+  title = 'Wave Graphics',
+  description = 'Wave Graphicsアプリへようこそ！このアプリでは，物理の授業で出てきそうな，波の模型をデジタル化し，ウェブで閲覧可能にしたものです．'
+} = Astro.props;
 
-const 正規URL = new URL(Astro.url.pathname, Astro.site).href; 
+const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
-<!doctype HTML>
-<html lang='ja'>
+<!doctype html>
+<html lang="ja">
   <head>
     <!-- 基本情報から -->
     <meta charset="UTF-8" />
@@ -27,7 +33,7 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="generator" content={Astro.generator} />
 
     <!-- slot -->
-    <slot name='head' />
+    <slot name="head" />
 
     <!-- SEO対策とメタタグ -->
     <meta name="description" content={description} />
@@ -37,7 +43,7 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
 
     <!-- アイコン -->
     <link rel="apple-touch-icon" href="/hotlink-ok/icons/favicon.png" />
-    <link rel="icon" href='/hotlink-ok/icons/favicon.png' />
+    <link rel="icon" href="/hotlink-ok/icons/favicon.png" />
     <meta data-pagefind-default-meta="image[content]" content={anotherFavicon} />
 
     <!-- SNS -->
@@ -65,7 +71,7 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
 </html>
 
 <style is:global>
-  @import "../styles/globals.scss";
+  @import '../styles/globals.scss';
 </style>
 
 <style lang="scss">

@@ -1,12 +1,12 @@
 ---
-import HeaderLayout from "../../layouts/HeaderLayout.astro";
+import HeaderLayout from '../../layouts/HeaderLayout.astro';
 
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 const policyEntries = await getCollection('policy');
 policyEntries.sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime()); // 日付順
 ---
 
-<Fragment slot='head'>
+<Fragment slot="head">
   <title>利用規約一覧 | Wave Graphics</title>
 </Fragment>
 
@@ -15,22 +15,28 @@ policyEntries.sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.g
 >
   <h2 data-pagefind-meta="title">ご利用規約一覧</h2>
   <div class="subSlot">
-    <p>Wave Graphics Appでは，コンテンツの適正かつ有益な利用のため，いくつかのルールを儲けさせていただいております．特にコンテンツを引用または二次創作等に利用なさる場合は，必ずお読みください．</p>
+    <p>
+      Wave Graphics
+      Appでは，コンテンツの適正かつ有益な利用のため，いくつかのルールを儲けさせていただいております．特にコンテンツを引用または二次創作等に利用なさる場合は，必ずお読みください．
+    </p>
   </div>
   <ul>
-    {policyEntries.map(policyEntry => (
-      <li>
-        <h3>
-          <a href={`/policy/${policyEntry.slug}/`}>
-            {policyEntry.data.title}
-          </a>
-        </h3>
-        <time datetime={policyEntry.data.lastUpdated.toISOString()}>
-          {policyEntry.data.lastUpdated.toLocaleDateString('ja-jp')}
-        </time><span>更新</span>
-        <p>{policyEntry.data.description}</p>
-      </li>
-    ))}
+    {
+      policyEntries.map((policyEntry) => (
+        <li>
+          <h3>
+            <a href={`/policy/${policyEntry.slug}/`}>{policyEntry.data.title}</a>
+          </h3>
+          <>
+            <time datetime={policyEntry.data.lastUpdated.toISOString()}>
+              {policyEntry.data.lastUpdated.toLocaleDateString('ja-jp')}
+            </time>
+            <span>更新</span>
+          </>
+          <p>{policyEntry.data.description}</p>
+        </li>
+      ))
+    }
   </ul>
 </HeaderLayout>
 

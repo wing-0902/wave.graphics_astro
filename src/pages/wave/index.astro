@@ -1,7 +1,7 @@
 ---
-import HeaderLayout from "../../layouts/HeaderLayout.astro";
+import HeaderLayout from '../../layouts/HeaderLayout.astro';
 
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
 // 波
 const waveEntries = await getCollection('wave');
@@ -11,27 +11,32 @@ const sortedWaveEntries = waveEntries.sort((a, b) => {
 });
 ---
 
-<Fragment slot='head'>
+<Fragment slot="head">
   <title>波の模型一覧 | Wave Graphics</title>
 </Fragment>
 
-<HeaderLayout
-  description="Wave Graphicsでは，以下のような波をご覧いただけます．"
->
+<HeaderLayout description="Wave Graphicsでは，以下のような波をご覧いただけます．">
   <h2 data-pagefind-meta="title">波の模型一覧</h2>
   <p>Wave Graphics Appでは，以下のような波をご覧いただけます．スクロールして見てみましょう！</p>
   <ul>
-    {sortedWaveEntries.map(waveEntry => (
-      <li>
-        <h4>
-          <a class="h4title" href={`/wave/${waveEntry.slug}/`}>{waveEntry.data.title}</a>
-          <time class="subText">{waveEntry.data.pubDate.toLocaleDateString("ja-jp")}</time><span class="subText">公開</span>
-        </h4>
-        <div class="subText">
-          <p>{waveEntry.data.description}</p>
-        </div>
-      </li>
-    ))}
+    {
+      sortedWaveEntries.map((waveEntry) => (
+        <li>
+          <h4>
+            <a class="h4title" href={`/wave/${waveEntry.slug}/`}>
+              {waveEntry.data.title}
+            </a>
+            <>
+              <time class="subText">{waveEntry.data.pubDate.toLocaleDateString('ja-jp')}</time>
+              <span class="subText">公開</span>
+            </>
+          </h4>
+          <div class="subText">
+            <p>{waveEntry.data.description}</p>
+          </div>
+        </li>
+      ))
+    }
   </ul>
 </HeaderLayout>
 

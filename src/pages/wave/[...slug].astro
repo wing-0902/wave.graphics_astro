@@ -1,32 +1,30 @@
 ---
-import HeaderLayout from "../../layouts/HeaderLayout.astro";
+import HeaderLayout from '../../layouts/HeaderLayout.astro';
 
 import 'katex/dist/katex.min.css';
 
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
 // 1. コレクションエントリーごとに新しいパスを生成
 export async function getStaticPaths() {
   const waveEntries = await getCollection('wave');
-  return waveEntries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
+  return waveEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
   }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 
-const titleOnHeader = entry.data.title + " | Wave Graphics"
+const titleOnHeader = entry.data.title + ' | Wave Graphics';
 ---
 
-<Fragment slot='head'>
+<Fragment slot="head">
   <title>{titleOnHeader}</title>
 </Fragment>
 
-<HeaderLayout
-  description={entry.data.description}
-  ogType='article'
->
+<HeaderLayout description={entry.data.description} ogType="article">
   <div class="link">
     {entry.data.pairName && <a href={`/wave/${entry.data.pairPath}/`}>{entry.data.pairName}へ＞</a>}
   </div>

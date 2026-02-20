@@ -3,15 +3,15 @@ import { z, defineCollection } from 'astro:content';
 
 // 2. コレクションを定義
 const waveCollection = defineCollection({
-  type: "content",
+  type: 'content',
   schema: z.object({
     title: z.string(),
     description: z.string(),
     pubDate: z.date(),
     num: z.number(),
     pairName: z.string().optional(),
-    pairPath: z.string().optional(),
-  }),
+    pairPath: z.string().optional()
+  })
 });
 
 const policyCollection = defineCollection({
@@ -19,8 +19,8 @@ const policyCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    lastUpdated: z.date(),
-  }),
+    lastUpdated: z.date()
+  })
 });
 
 const frameworkCollection = defineCollection({
@@ -31,15 +31,15 @@ const frameworkCollection = defineCollection({
     num: z.number(),
     siteUrl: z.string(),
     githubUrl: z.string(),
-    icon: z.string().default("/hotlink-ok/icons/favicon.png"),
-    themeColor: z.string().default('#888eff'),
-  }),
+    icon: z.string().default('/hotlink-ok/icons/favicon.png'),
+    themeColor: z.string().default('#888eff')
+  })
 });
 
 // 3. コレクションを登録するために、単一の`collections`オブジェクトをエクスポート
 //    このキーは、"src/content"のコレクションのディレクトリ名と一致する必要があります。
 export const collections = {
-  'policy': policyCollection,
-  'framework': frameworkCollection,
-  'wave': waveCollection,
+  policy: policyCollection,
+  framework: frameworkCollection,
+  wave: waveCollection
 };

@@ -12,7 +12,7 @@ interface OscillationCanvasProps {
 const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
   initialAmplitude = 100,
   initialFrequency = 2.3,
-  initialWaveSpeed = 150, // 波の速さの初期値を設定
+  initialWaveSpeed = 150 // 波の速さの初期値を設定
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [amplitude, setAmplitude] = useState(initialAmplitude);
@@ -35,8 +35,8 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
 
     // アニメーションが一時停止中の場合は描画ループを停止
     if (!isPlaying) {
-        animationFrameIdRef.current = null;
-        return;
+      animationFrameIdRef.current = null;
+      return;
     }
 
     // 経過時間 (秒) の計算
@@ -155,7 +155,8 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
     ctx.moveTo(shmCurrentX, shmCurrentY);
 
     // キャンバスの右端まで波を描画
-    for (let x = shmCurrentX; x <= canvas.width; x += 1 * scaleFactor) { // xの増分もスケール
+    for (let x = shmCurrentX; x <= canvas.width; x += 1 * scaleFactor) {
+      // xの増分もスケール
       // 波の位相は、時間経過と位置によって変化
       // 位相 = 角度 - k * (x - 波源のx)
       const wavePhase = angle - waveNumber * (x - shmCurrentX);
@@ -163,7 +164,6 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
       ctx.lineTo(x, waveY);
     }
     ctx.stroke();
-
 
     animationFrameIdRef.current = requestAnimationFrame(animate);
   }, [amplitude, angularFrequency, waveSpeed, startTime, isPlaying]); // waveSpeedを依存配列に追加
@@ -178,38 +178,38 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
 
     // useEffectのクリーンアップ関数でアニメーションを確実に停止
     return () => {
-        if (animationFrameIdRef.current) {
-            cancelAnimationFrame(animationFrameIdRef.current);
-        }
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
     };
   }, [initialAmplitude, initialFrequency, initialWaveSpeed]); // initialWaveSpeedを依存配列に追加
 
   // isPlayingの状態が変化したときにアニメーションを開始/停止する専用のuseEffect
   useEffect(() => {
-      if (isPlaying) {
-          // 再生時にはアニメーションループを開始
-          animationFrameIdRef.current = requestAnimationFrame(animate);
-      } else {
-          // 一時停止時にはアニメーションループを停止
-          if (animationFrameIdRef.current) {
-              cancelAnimationFrame(animationFrameIdRef.current);
-              animationFrameIdRef.current = null;
-          }
+    if (isPlaying) {
+      // 再生時にはアニメーションループを開始
+      animationFrameIdRef.current = requestAnimationFrame(animate);
+    } else {
+      // 一時停止時にはアニメーションループを停止
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
       }
-      // cleanup function for this useEffect specific to animation frame management
-      return () => {
-        if(animationFrameIdRef.current){
-          cancelAnimationFrame(animationFrameIdRef.current);
-          animationFrameIdRef.current = null;
-        }
+    }
+    // cleanup function for this useEffect specific to animation frame management
+    return () => {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
       }
+    };
   }, [isPlaying, animate]);
 
   // キャンバスのサイズを親要素に合わせて動的に設定するuseEffect
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    
+
     const setCanvasDimensions = () => {
       const parent = canvas.parentElement;
       if (!parent) return;
@@ -222,8 +222,9 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
       canvas.height = currentWidth * aspectRatio; // 幅に合わせて高さを調整し、アスペクト比を維持
 
       // サイズ変更後にキャンバス内容を再描画
-      if (!isPlaying) { // 一時停止中の場合は一度だけ再描画
-          animate();
+      if (!isPlaying) {
+        // 一時停止中の場合は一度だけ再描画
+        animate();
       }
     };
 
@@ -240,12 +241,12 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
   }, [animate, isPlaying]); // animate関数とisPlayingの状態を依存配列に追加
 
   const handleReset = () => {
-      setAmplitude(initialAmplitude);
-      setAngularFrequency(initialFrequency);
-      setWaveSpeed(initialWaveSpeed); // 波の速さもリセット
-      setStartTime(Date.now()); // 時間をリセット
-      pausedTimeRef.current = 0; // 一時停止時間もリセット
-      setIsPlaying(true); // 再生状態に戻す
+    setAmplitude(initialAmplitude);
+    setAngularFrequency(initialFrequency);
+    setWaveSpeed(initialWaveSpeed); // 波の速さもリセット
+    setStartTime(Date.now()); // 時間をリセット
+    pausedTimeRef.current = 0; // 一時停止時間もリセット
+    setIsPlaying(true); // 再生状態に戻す
   };
 
   return (
@@ -262,7 +263,7 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
               <td>
                 <label htmlFor="amplitude">
                   振幅（円の半径）
-                  <InlineMath math='A' />
+                  <InlineMath math="A" />
                 </label>
               </td>
               <td>：</td>
@@ -288,7 +289,7 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
               <td>
                 <label htmlFor="frequency">
                   振動数
-                  <InlineMath math='f' />
+                  <InlineMath math="f" />
                 </label>
               </td>
               <td>：</td>
@@ -315,7 +316,7 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
               <td>
                 <label htmlFor="waveSpeed">
                   波の速さ
-                  <InlineMath math='v' />
+                  <InlineMath math="v" />
                 </label>
               </td>
               <td>：</td>
@@ -340,9 +341,21 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
             </tr>
           </tbody>
         </table>
-        <div className={styles.buttonList}> {/* stylesモジュールを使用 */}
-          <button className={styles.button} onClick={handleReset}> {/* stylesモジュールを使用 */}
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z"/></svg>
+        <div className={styles.buttonList}>
+          {' '}
+          {/* stylesモジュールを使用 */}
+          <button className={styles.button} onClick={handleReset}>
+            {' '}
+            {/* stylesモジュールを使用 */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="currentColor"
+            >
+              <path d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z" />
+            </svg>
           </button>
         </div>
       </div>

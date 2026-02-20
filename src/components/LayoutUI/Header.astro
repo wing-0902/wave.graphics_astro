@@ -14,50 +14,50 @@
 </header>
 
 <style lang="scss">
-header {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  box-shadow: 0 1px 7px var(--foreground);
-  height: 36px;
-  background-color: var(--background-transparent);
-  backdrop-filter: blur(3px);
-  padding: 0 14px;
-  display: flex;
-  box-sizing: border-box;
-  justify-content: space-between;
-
-  .waveTitle {
-    margin-top: -30px;
+  header {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    box-shadow: 0 1px 7px var(--foreground);
+    height: 36px;
+    background-color: var(--background-transparent);
+    backdrop-filter: blur(3px);
+    padding: 0 14px;
     display: flex;
-    align-items: baseline;
-    h1 {
-      font-family: Playwrite;
-      --gradientLeft: #02175c;
-      --gradientRight: #0072ff;
-      --gradientLeftHover: #02175cab;
-      --gradientRightHover: #0073ffab;
-      @media (prefers-color-scheme: dark) {
-        --gradientLeft: #00c6ff;
-        --gradientLeftHober: #00c6ffab;
+    box-sizing: border-box;
+    justify-content: space-between;
+
+    .waveTitle {
+      margin-top: -30px;
+      display: flex;
+      align-items: baseline;
+      h1 {
+        font-family: Playwrite;
+        --gradientLeft: #02175c;
+        --gradientRight: #0072ff;
+        --gradientLeftHover: #02175cab;
+        --gradientRightHover: #0073ffab;
+        @media (prefers-color-scheme: dark) {
+          --gradientLeft: #00c6ff;
+          --gradientLeftHober: #00c6ffab;
+        }
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 29px;
+        background: linear-gradient(45deg, var(--gradientLeft), var(--gradientRight));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
-      font-weight: bold;
-      text-decoration: none;
-      font-size: 29px;
-      background: linear-gradient(45deg, var(--gradientLeft), var(--gradientRight));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      span {
+        color: var(--foreground);
+      }
     }
-    span {
-      color: var(--foreground);
+    nav {
+      a {
+        margin: auto 2px;
+      }
     }
   }
-  nav {
-    a {
-      margin: auto  2px;
-    }
-  }
-}
 </style>

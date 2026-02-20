@@ -28,7 +28,7 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
   dotColor = 'red',
   dotRadius = 4,
   dotDensity = 20,
-  showIndividualWaves = true,
+  showIndividualWaves = true
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameId = useRef<number | null>(null);
@@ -59,18 +59,20 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
       });
     }
     return data;
-  }, []); */  // 無効化してます
+  }, []); */ // 無効化してます
 
-  const getGaussianWaveAmplitudeAtTime = useCallback((
-    targetTime: number,
-    amp: number, // このampはピクセル値として扱われる
-    sigma: number,
-    centerTime: number
-  ): number => {
-    const exponent = -Math.pow(targetTime - centerTime, 2) / (2 * Math.pow(sigma, 2));
-    return amp * Math.exp(exponent); // ampを直接使用
-  }, []);
-
+  const getGaussianWaveAmplitudeAtTime = useCallback(
+    (
+      targetTime: number,
+      amp: number, // このampはピクセル値として扱われる
+      sigma: number,
+      centerTime: number
+    ): number => {
+      const exponent = -Math.pow(targetTime - centerTime, 2) / (2 * Math.pow(sigma, 2));
+      return amp * Math.exp(exponent); // ampを直接使用
+    },
+    []
+  );
 
   const drawWaves = useCallback(() => {
     const canvas = canvasRef.current;
@@ -103,8 +105,18 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
     for (let xPixel = dotDensity; xPixel < canvasWidth; xPixel += dotDensity) {
       const t = xPixel / xScale;
 
-      const amplitudeLeft = getGaussianWaveAmplitudeAtTime(t, waveAmplitudeLeft, waveSpread, timeOffsetLeftWave);
-      const amplitudeRight = getGaussianWaveAmplitudeAtTime(duration - t, waveAmplitudeRight, waveSpread, timeOffsetRightWave);
+      const amplitudeLeft = getGaussianWaveAmplitudeAtTime(
+        t,
+        waveAmplitudeLeft,
+        waveSpread,
+        timeOffsetLeftWave
+      );
+      const amplitudeRight = getGaussianWaveAmplitudeAtTime(
+        duration - t,
+        waveAmplitudeRight,
+        waveSpread,
+        timeOffsetRightWave
+      );
 
       const combinedAmplitude = amplitudeLeft + amplitudeRight;
 
@@ -124,7 +136,12 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
       ctx.beginPath();
       for (let xPixel = 0; xPixel < canvasWidth; xPixel++) {
         const t = xPixel / xScale;
-        const amplitude = getGaussianWaveAmplitudeAtTime(t, waveAmplitudeLeft, waveSpread, timeOffsetLeftWave);
+        const amplitude = getGaussianWaveAmplitudeAtTime(
+          t,
+          waveAmplitudeLeft,
+          waveSpread,
+          timeOffsetLeftWave
+        );
         const y = yCenter - amplitude * 0.8; // 0.8をかける
         if (xPixel === 0) {
           ctx.moveTo(xPixel, y);
@@ -140,7 +157,12 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
       ctx.beginPath();
       for (let xPixel = 0; xPixel < canvasWidth; xPixel++) {
         const t = xPixel / xScale;
-        const amplitude = getGaussianWaveAmplitudeAtTime(duration - t, waveAmplitudeRight, waveSpread, timeOffsetRightWave);
+        const amplitude = getGaussianWaveAmplitudeAtTime(
+          duration - t,
+          waveAmplitudeRight,
+          waveSpread,
+          timeOffsetRightWave
+        );
         const y = yCenter - amplitude * 0.8; // 0.8をかける
         if (xPixel === 0) {
           ctx.moveTo(xPixel, y);
@@ -157,8 +179,18 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
     ctx.beginPath();
     for (let xPixel = 0; xPixel < canvasWidth; xPixel++) {
       const t = xPixel / xScale;
-      const amplitudeLeft = getGaussianWaveAmplitudeAtTime(t, waveAmplitudeLeft, waveSpread, timeOffsetLeftWave);
-      const amplitudeRight = getGaussianWaveAmplitudeAtTime(duration - t, waveAmplitudeRight, waveSpread, timeOffsetRightWave);
+      const amplitudeLeft = getGaussianWaveAmplitudeAtTime(
+        t,
+        waveAmplitudeLeft,
+        waveSpread,
+        timeOffsetLeftWave
+      );
+      const amplitudeRight = getGaussianWaveAmplitudeAtTime(
+        duration - t,
+        waveAmplitudeRight,
+        waveSpread,
+        timeOffsetRightWave
+      );
       const combinedAmplitude = amplitudeLeft + amplitudeRight;
       const y = yCenter - combinedAmplitude * 0.8; // 0.8をかける
       if (xPixel === 0) {
@@ -168,30 +200,48 @@ const KasaneCanvas: React.FC<SuperpositionCanvasProps> = ({
       }
     }
     ctx.stroke();
+  }, [
+    waveSpread,
+    duration,
+    timeOffsetLeftWave,
+    timeOffsetRightWave,
+    canvasWidth,
+    height,
+    lineColor,
+    backgroundColor,
+    dotColor,
+    dotRadius,
+    dotDensity,
+    getGaussianWaveAmplitudeAtTime,
+    showIndividualWaves,
+    waveAmplitudeLeft,
+    waveAmplitudeRight
+  ]);
 
-  }, [waveSpread, duration, timeOffsetLeftWave, timeOffsetRightWave, canvasWidth, height, lineColor, backgroundColor, dotColor, dotRadius, dotDensity, getGaussianWaveAmplitudeAtTime, showIndividualWaves, waveAmplitudeLeft, waveAmplitudeRight]);
+  const animateWaves = useCallback(
+    (timestamp: DOMHighResTimeStamp) => {
+      if (!startTime.current) {
+        startTime.current = timestamp;
+      }
+      const elapsed = timestamp - startTime.current;
 
-  const animateWaves = useCallback((timestamp: DOMHighResTimeStamp) => {
-    if (!startTime.current) {
-      startTime.current = timestamp;
-    }
-    const elapsed = timestamp - startTime.current;
+      const newOffsetLeft = (elapsed / 1000) * waveSpeed * duration;
+      const newOffsetRight = (elapsed / 1000) * waveSpeed * duration;
 
-    const newOffsetLeft = (elapsed / 1000) * waveSpeed * duration;
-    const newOffsetRight = (elapsed / 1000) * waveSpeed * duration;
+      if (newOffsetLeft > duration * 2 || newOffsetRight > duration * 2) {
+        startTime.current = timestamp;
+        setTimeOffsetLeftWave(0);
+        setTimeOffsetRightWave(0);
+      } else {
+        setTimeOffsetLeftWave(newOffsetLeft);
+        setTimeOffsetRightWave(newOffsetRight);
+      }
 
-    if (newOffsetLeft > duration * 2 || newOffsetRight > duration * 2) {
-      startTime.current = timestamp;
-      setTimeOffsetLeftWave(0);
-      setTimeOffsetRightWave(0);
-    } else {
-      setTimeOffsetLeftWave(newOffsetLeft);
-      setTimeOffsetRightWave(newOffsetRight);
-    }
-
-    drawWaves();
-    animationFrameId.current = requestAnimationFrame(animateWaves);
-  }, [drawWaves, waveSpeed, duration]);
+      drawWaves();
+      animationFrameId.current = requestAnimationFrame(animateWaves);
+    },
+    [drawWaves, waveSpeed, duration]
+  );
 
   useEffect(() => {
     animationFrameId.current = requestAnimationFrame(animateWaves);

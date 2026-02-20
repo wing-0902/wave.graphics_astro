@@ -4,6 +4,7 @@ description: 波の中でも正弦波は，音波，電波，光など，様々�
 pubDate: 2025-09-28T21:30:00+09:00
 num: 16000
 ---
+
 import OscillationCanvas from '../../components/WaveCanvas/正弦波/canvas.tsx';
 
 <OscillationCanvas client:load />
@@ -46,19 +47,26 @@ $$
 波源は単振動しており，波は$x$軸の正の向きに速さ$v  \text{[m/s]}$で伝わると仮定する．<br />
 正弦波の振幅$A \text{[m]}$，周期$T \text{[s]}$，波長$\lambda  \text{[m]}$とおく．<br />
 原点$x=0$にある波源の，時刻$t  \text{[s]}$での変位$y  \text{[m]}$は，次のように表される．<br />
+
 $$
 y = A \sin \frac { 2 \pi } { T } t
 $$
+
 ここで，位置$x \text{[m]}$（点Pとする）にある媒質の，時刻$t  \text{[s]}$における変位$y  \text{[m]}$を考える．<br />
 点Pに原点の振動が伝わるのにかかる時間$t _ { 0 } \text{[s]}$は，次のように表される．<br />
+
 $$
 t _ { 0 } = \frac { x } { v } \text{[s]}
 $$
+
 したがって，時刻$t \text{[s]}$での点Pの変位$y$は，時刻$(t-t_{0}) \text{[s]}$での原点の変位と同じである．ゆえに，<br />
+
 $$
 y = A \sin \frac { 2 \pi } { T } ( t - t _ { 0 } ) = A \sin \frac { 2 \pi } { T } ( t - \frac { x } { v } )
 $$
+
 ここで，$v=\frac{\lambda}{T}$より，**正弦波の式**は次のようになる．
+
 $$
 y = A \sin 2 \pi ( \frac { t } { T } - \frac { x } { \lambda } )
 $$

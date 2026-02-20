@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import SuperpositionCanvas from './canvas.tsx';
-import styles from './control.module.scss'
+import styles from './control.module.scss';
 
 export default function KasaneWave() {
   // スライダの値を管理
@@ -12,7 +12,7 @@ export default function KasaneWave() {
   return (
     <>
       <section className={styles.controlSection}>
-        <SuperpositionCanvas 
+        <SuperpositionCanvas
           waveAmplitudeLeft={leftAmplitude}
           waveAmplitudeRight={rightAmplitude}
         />
@@ -20,17 +20,15 @@ export default function KasaneWave() {
           <tbody>
             <tr>
               <td>
-                <label htmlFor='leftAmplitudeSlider'>
-                  左の波の高さ：{leftAmplitude} px
-                </label>
+                <label htmlFor="leftAmplitudeSlider">左の波の高さ：{leftAmplitude} px</label>
               </td>
               <td>
                 <input
-                  id='leftAmplitudeSlider'
+                  id="leftAmplitudeSlider"
                   className={styles.slider}
-                  type='range'
-                  min='-120'
-                  max='120'
+                  type="range"
+                  min="-120"
+                  max="120"
                   value={leftAmplitude}
                   onChange={(e) => setLeftAmplitude(Number(e.target.value))}
                 />
@@ -38,17 +36,15 @@ export default function KasaneWave() {
             </tr>
             <tr>
               <td>
-                <label htmlFor='rightAmplitudeSlider'>
-                  右の波の高さ：{rightAmplitude} px
-                </label>
+                <label htmlFor="rightAmplitudeSlider">右の波の高さ：{rightAmplitude} px</label>
               </td>
               <td>
                 <input
-                  id='rightAmplitudeSlider'
+                  id="rightAmplitudeSlider"
                   className={styles.slider}
-                  type='range'
-                  min='-120'
-                  max='120'
+                  type="range"
+                  min="-120"
+                  max="120"
                   value={rightAmplitude}
                   onChange={(e) => setRightAmplitude(Number(e.target.value))}
                 />
@@ -58,5 +54,5 @@ export default function KasaneWave() {
         </table>
       </section>
     </>
-  )
+  );
 }

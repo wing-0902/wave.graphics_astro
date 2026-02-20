@@ -6,10 +6,11 @@ import { getCollection } from 'astro:content';
 // 1. コレクションエントリーごとに新しいパスを生成
 export async function getStaticPaths() {
   const frameworkEntries = await getCollection('framework');
-  return frameworkEntries.map(entry => ({
-    params: { slug: entry.slug }, props: { entry },
+  return frameworkEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry }
   }));
-};
+}
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
@@ -19,14 +20,14 @@ const titleOnHeader = entry.data.title + ' | Wave Graphics';
 import AboutWidget from '../../components/FrameworkUI/AboutWidget.svelte';
 ---
 
-<Fragment slot='head'>
+<Fragment slot="head">
   <title>{titleOnHeader}</title>
 </Fragment>
 
 <HeaderLayout
   description={entry.data.description}
   anotherFavicon={entry.data.icon}
-  ogType='article'
+  ogType="article"
 >
   <h2 data-pagefind-meta="title">{entry.data.title}</h2>
   <div class="descriptionSlot">
@@ -35,7 +36,7 @@ import AboutWidget from '../../components/FrameworkUI/AboutWidget.svelte';
       siteUrl={entry.data.siteUrl}
       githubUrl={entry.data.githubUrl}
       themeColor={entry.data.themeColor}
-      client:load 
+      client:load
     />
   </div>
   <section class="mainContent">

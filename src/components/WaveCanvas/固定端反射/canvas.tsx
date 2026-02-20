@@ -23,7 +23,7 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
   lineColor = '#ea00ffff', // 入射波の線の色（デフォルト値：オレンジ）
   reflectedLineColor = '#00cc00', // 反射波の線の色（デフォルト値：赤 - 反転を示す）
   combinedLineColor = '#ffa238', // 合成波の線の色（デフォルト値：緑）
-  backgroundColor = 'transparent', // キャンバスの背景色（デフォルト値）
+  backgroundColor = 'transparent' // キャンバスの背景色（デフォルト値）
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null); // キャンバス要素への参照
   const animationFrameId = useRef<number | null>(null); // アニメーションフレームID
@@ -65,18 +65,21 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
 
   // 特定の「時間」座標における波の振幅を取得するヘルパー関数
   // これはガウス関数の値を直接計算し、必要に応じて反転させる
-  const getWaveAmplitudeAtTime = useCallback((
-    targetTime: number, // 「時間」座標（ガウス関数のx軸に相当）
-    amp: number, // 振幅
-    sigma: number, // 広がり（標準偏差）
-    centerTime: number, // ガウスパルスの中心
-    isInverted: boolean = false // 固定端反射の場合に振幅を反転させるフラグ
-  ): number => {
-    // ガウス関数: A * exp(-(t - t0)^2 / (2 * sigma^2))
-    const exponent = -Math.pow(targetTime - centerTime, 2) / (2 * Math.pow(sigma, 2));
-    const amplitude = amp * Math.exp(exponent);
-    return isInverted ? -amplitude : amplitude; // isInvertedがtrueの場合、振幅を反転
-  }, []);
+  const getWaveAmplitudeAtTime = useCallback(
+    (
+      targetTime: number, // 「時間」座標（ガウス関数のx軸に相当）
+      amp: number, // 振幅
+      sigma: number, // 広がり（標準偏差）
+      centerTime: number, // ガウスパルスの中心
+      isInverted: boolean = false // 固定端反射の場合に振幅を反転させるフラグ
+    ): number => {
+      // ガウス関数: A * exp(-(t - t0)^2 / (2 * sigma^2))
+      const exponent = -Math.pow(targetTime - centerTime, 2) / (2 * Math.pow(sigma, 2));
+      const amplitude = amp * Math.exp(exponent);
+      return isInverted ? -amplitude : amplitude; // isInvertedがtrueの場合、振幅を反転
+    },
+    []
+  );
 
   // 波を描画する関数
   const drawWave = useCallback(() => {
@@ -124,7 +127,13 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
     for (let xPixel = 0; xPixel <= reflectionPointX; xPixel++) {
       const t = xPixel / xScale;
       // 反射波の振幅を計算（固定端なので反転）
-      const reflectedAmplitude = getWaveAmplitudeAtTime(t, pulseAmplitude, pulseSpread, reflectedTimeOffset, true); // trueで反転
+      const reflectedAmplitude = getWaveAmplitudeAtTime(
+        t,
+        pulseAmplitude,
+        pulseSpread,
+        reflectedTimeOffset,
+        true
+      ); // trueで反転
       const y = yOffset - reflectedAmplitude * 0.45 * yScale; // 係数を0.45に変更
       if (xPixel === 0) {
         ctx.moveTo(xPixel, y);
@@ -144,7 +153,12 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
     for (let xPixel = 0; xPixel <= reflectionPointX; xPixel++) {
       const t = xPixel / xScale;
       // 入射波の振幅のみ
-      const incidentAmplitude = getWaveAmplitudeAtTime(t, pulseAmplitude, pulseSpread, incidentTimeOffset);
+      const incidentAmplitude = getWaveAmplitudeAtTime(
+        t,
+        pulseAmplitude,
+        pulseSpread,
+        incidentTimeOffset
+      );
       const y = yOffset - incidentAmplitude * 0.45 * yScale; // 係数を0.45に変更
       if (xPixel === 0) {
         ctx.moveTo(xPixel, y);
@@ -159,14 +173,24 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
     ctx.beginPath();
     // reflectionPointXでのY座標を計算してmoveToする
     const tAtReflectionPoint = reflectionPointX / xScale;
-    const incidentAmplitudeAtReflectionPoint = getWaveAmplitudeAtTime(tAtReflectionPoint, pulseAmplitude, pulseSpread, incidentTimeOffset);
+    const incidentAmplitudeAtReflectionPoint = getWaveAmplitudeAtTime(
+      tAtReflectionPoint,
+      pulseAmplitude,
+      pulseSpread,
+      incidentTimeOffset
+    );
     const yAtReflectionPoint = yOffset - incidentAmplitudeAtReflectionPoint * 0.45 * yScale; // 係数を0.45に変更
     ctx.moveTo(reflectionPointX, yAtReflectionPoint);
 
     for (let xPixel = Math.floor(reflectionPointX) + 1; xPixel < canvasWidth; xPixel++) {
       const t = xPixel / xScale;
       // 入射波の振幅のみ
-      const incidentAmplitude = getWaveAmplitudeAtTime(t, pulseAmplitude, pulseSpread, incidentTimeOffset);
+      const incidentAmplitude = getWaveAmplitudeAtTime(
+        t,
+        pulseAmplitude,
+        pulseSpread,
+        incidentTimeOffset
+      );
       const y = yOffset - incidentAmplitude * 0.45 * yScale; // 係数を0.45に変更
       ctx.lineTo(xPixel, y);
     }
@@ -183,9 +207,20 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
     // 合成波は反射壁より左側のみに描画
     for (let xPixel = 0; xPixel <= reflectionPointX; xPixel++) {
       const t = xPixel / xScale;
-      const incidentAmplitude = getWaveAmplitudeAtTime(t, pulseAmplitude, pulseSpread, incidentTimeOffset);
+      const incidentAmplitude = getWaveAmplitudeAtTime(
+        t,
+        pulseAmplitude,
+        pulseSpread,
+        incidentTimeOffset
+      );
       // 固定端反射のため、反射波の振幅は反転したものを使用
-      const reflectedAmplitudeForCombination = getWaveAmplitudeAtTime(t, pulseAmplitude, pulseSpread, reflectedTimeOffset, true); // trueで反転
+      const reflectedAmplitudeForCombination = getWaveAmplitudeAtTime(
+        t,
+        pulseAmplitude,
+        pulseSpread,
+        reflectedTimeOffset,
+        true
+      ); // trueで反転
       // 入射波と反転した反射波の振幅を足し合わせる
       const combinedAmplitude = incidentAmplitude + reflectedAmplitudeForCombination;
       const y = yOffset - combinedAmplitude * 0.45 * yScale; // 係数を0.45に変更
@@ -198,45 +233,57 @@ const FixedEndReflectionCanvas: React.FC<FixedEndReflectionCanvasProps> = ({
     ctx.stroke();
     ctx.setLineDash([]); // 念のためリセット
     ctx.globalAlpha = 1.0; // 透明度を元に戻す
-
   }, [
-    pulseAmplitude, pulseSpread, incidentTimeOffset, reflectedTimeOffset,
-    canvasWidth, height, lineColor, reflectedLineColor, combinedLineColor, backgroundColor,
-    getWaveAmplitudeAtTime, reflectionPointX, xScale
+    pulseAmplitude,
+    pulseSpread,
+    incidentTimeOffset,
+    reflectedTimeOffset,
+    canvasWidth,
+    height,
+    lineColor,
+    reflectedLineColor,
+    combinedLineColor,
+    backgroundColor,
+    getWaveAmplitudeAtTime,
+    reflectionPointX,
+    xScale
   ]);
 
   // アニメーションループ
-  const animate = useCallback((timestamp: DOMHighResTimeStamp) => {
-    if (!startTime.current) {
-      startTime.current = timestamp;
-    }
-    const elapsed = timestamp - startTime.current; // アニメーション開始からの経過時間（ミリ秒）
-    const currentSimulationTime = (elapsed / 1000); // 秒に変換
+  const animate = useCallback(
+    (timestamp: DOMHighResTimeStamp) => {
+      if (!startTime.current) {
+        startTime.current = timestamp;
+      }
+      const elapsed = timestamp - startTime.current; // アニメーション開始からの経過時間（ミリ秒）
+      const currentSimulationTime = elapsed / 1000; // 秒に変換
 
-    // 入射パルスの中心位置を「時間」単位で計算
-    const currentIncidentPulseCenter = currentSimulationTime * pulseSpeed;
+      // 入射パルスの中心位置を「時間」単位で計算
+      const currentIncidentPulseCenter = currentSimulationTime * pulseSpeed;
 
-    // 入射波のStateを更新
-    setIncidentTimeOffset(currentIncidentPulseCenter);
+      // 入射波のStateを更新
+      setIncidentTimeOffset(currentIncidentPulseCenter);
 
-    // 反射波の中心を常に計算
-    // 固定端反射の場合も、反射波の仮想波源は反射点に対してミラーリングされる
-    // 入射パルスの中心がC_inc、反射点がRの場合、
-    // 仮想波源はR + (R - C_inc) = 2R - C_inc
-    const currentReflectedPulseCenter = 2 * reflectionPointTime - currentIncidentPulseCenter;
-    setReflectedTimeOffset(currentReflectedPulseCenter);
+      // 反射波の中心を常に計算
+      // 固定端反射の場合も、反射波の仮想波源は反射点に対してミラーリングされる
+      // 入射パルスの中心がC_inc、反射点がRの場合、
+      // 仮想波源はR + (R - C_inc) = 2R - C_inc
+      const currentReflectedPulseCenter = 2 * reflectionPointTime - currentIncidentPulseCenter;
+      setReflectedTimeOffset(currentReflectedPulseCenter);
 
-    // リセット条件：反射波がキャンバスの左端から完全に離れた場合
-    // （つまり、その中心が、その広がりを考慮して0よりかなり左にある場合）
-    if (currentReflectedPulseCenter < -pulseSpread * 5) {
-      startTime.current = timestamp; // アニメーションタイマーをリセット
-      setIncidentTimeOffset(0); // 入射波をリセット
-      setReflectedTimeOffset(2 * reflectionPointTime); // 反射波を初期位置にリセット
-    }
+      // リセット条件：反射波がキャンバスの左端から完全に離れた場合
+      // （つまり、その中心が、その広がりを考慮して0よりかなり左にある場合）
+      if (currentReflectedPulseCenter < -pulseSpread * 5) {
+        startTime.current = timestamp; // アニメーションタイマーをリセット
+        setIncidentTimeOffset(0); // 入射波をリセット
+        setReflectedTimeOffset(2 * reflectionPointTime); // 反射波を初期位置にリセット
+      }
 
-    drawWave(); // 現在のフレームを描画
-    animationFrameId.current = requestAnimationFrame(animate); // 次のフレームを要求
-  }, [drawWave, pulseSpeed, reflectionPointTime, pulseSpread]);
+      drawWave(); // 現在のフレームを描画
+      animationFrameId.current = requestAnimationFrame(animate); // 次のフレームを要求
+    },
+    [drawWave, pulseSpeed, reflectionPointTime, pulseSpread]
+  );
 
   // アニメーションループの開始と停止を行うuseEffect
   useEffect(() => {

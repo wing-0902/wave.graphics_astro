@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig, passthroughImageService  } from 'astro/config';
+import { defineConfig, passthroughImageService } from 'astro/config';
 
 import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
@@ -19,11 +19,11 @@ export default defineConfig({
   trailingSlash: 'always',
   compressHTML: true,
   build: {
-    format: 'directory',
+    format: 'directory'
   },
 
   image: {
-    service: passthroughImageService(),
+    service: passthroughImageService()
   },
 
   markdown: {
@@ -37,9 +37,9 @@ export default defineConfig({
           rel: ['noopener', 'noreferrer'],
           site: 'https://wave.graphics'
         }
-      ],
-    ],
+      ]
+    ]
   },
 
-  integrations: [svelte(), mdx(), react(), sitemap(), vue()],
+  integrations: [svelte(), mdx(), react(), sitemap(), vue()]
 });

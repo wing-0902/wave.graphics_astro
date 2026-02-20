@@ -1,12 +1,9 @@
-<script lang='ts'>
-
+<script lang="ts">
 </script>
 
-<span>
-  *
-</span>
+<span> * </span>
 
-<style lang='scss'>
+<style lang="scss">
   span {
     color: red;
     font-family: FiraCode;

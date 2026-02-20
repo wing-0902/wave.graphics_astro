@@ -1,7 +1,7 @@
 ---
-import HeaderLayout from "../layouts/HeaderLayout.astro";
+import HeaderLayout from '../layouts/HeaderLayout.astro';
 
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
 // 波
 const waveEntries = await getCollection('wave');
@@ -22,40 +22,53 @@ const sortedFrameworkEntries = frameworkEntries.sort((a, b) => {
 const firstFiveFrameworkEntries = sortedFrameworkEntries.slice(0, 5);
 ---
 
-<Fragment slot='slot'>
+<Fragment slot="slot">
   <title>Wave Graphics App by Wing</title>
 </Fragment>
 
-<HeaderLayout
->
+<HeaderLayout>
   <section data-pagefind-ignore="all">
     <h3>波の模型一覧</h3>
     <p>スクロールして，さまざまな波の模型を見てみましょう．</p>
     <ul>
-      {lastTenWaveEntries.map(waveEntry => (
-        <li>
-          <h4>
-            <a class="h4title" href={`/wave/${waveEntry.slug}/`}>{waveEntry.data.title}</a>
-            <time class="subText">{waveEntry.data.pubDate.toLocaleDateString("ja-jp")}</time><span class="subText">公開</span>
-          </h4>
-          <div class="subText">
-            <p>{waveEntry.data.description}</p>
-          </div>
-        </li>
-      ))}
+      {
+        lastTenWaveEntries.map((waveEntry) => (
+          <li>
+            <h4>
+              <a class="h4title" href={`/wave/${waveEntry.slug}/`}>
+                {waveEntry.data.title}
+              </a>
+              <>
+                <time class="subText">{waveEntry.data.pubDate.toLocaleDateString('ja-jp')}</time>
+                <span class="subText">公開</span>
+              </>
+            </h4>
+            <div class="subText">
+              <p>{waveEntry.data.description}</p>
+            </div>
+          </li>
+        ))
+      }
     </ul>
     <a href="/wave/">もっと見る</a>
   </section>
   <section>
     <h3>利用しているフレームワーク</h3>
     <ul>
-      {firstFiveFrameworkEntries.map(frameworkEntry => (
-        <li>
-          <h4>
-            <a class="h4title" href={`/framework/${frameworkEntry.slug}/`}>{frameworkEntry.data.title}</a><span class="h4description">：{frameworkEntry.data.description}</span>
-          </h4>
-        </li>
-      ))}
+      {
+        firstFiveFrameworkEntries.map((frameworkEntry) => (
+          <li>
+            <h4>
+              <>
+                <a class="h4title" href={`/framework/${frameworkEntry.slug}/`}>
+                  {frameworkEntry.data.title}
+                </a>
+                <span class="h4description">：{frameworkEntry.data.description}</span>
+              </>
+            </h4>
+          </li>
+        ))
+      }
     </ul>
     <a href="/framework/">もっと見る</a>
   </section>
@@ -63,10 +76,12 @@ const firstFiveFrameworkEntries = sortedFrameworkEntries.slice(0, 5);
     <h3>アンケートとお問い合わせ</h3>
     <ul>
       <li>
-        <strong><a href='/form/'>アンケート</a></strong>：Wave Graphics Appをより良くするため，アンケートでご意見を伺っております．運営者へのお問い合わせなどもフォームで受け付けております．
+        <strong><a href="/form/">アンケート</a></strong>：Wave Graphics
+        Appをより良くするため，アンケートでご意見を伺っております．運営者へのお問い合わせなどもフォームで受け付けております．
       </li>
       <li>
-        <strong><a href='mailto:wing@me.wing.osaka'>メール</a></strong>：サイト運営者へのお問い合わせなどは，メールでも受け付けております．返信することは確約できませんが，可能な限り頂いたメールは拝見いたします．
+        <strong><a href="mailto:wing@me.wing.osaka">メール</a></strong
+        >：サイト運営者へのお問い合わせなどは，メールでも受け付けております．返信することは確約できませんが，可能な限り頂いたメールは拝見いたします．
       </li>
     </ul>
   </section>

@@ -1,4 +1,4 @@
-import styles from './canvas.module.scss'
+import styles from './canvas.module.scss';
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 
 interface OscillationCanvasProps {
@@ -8,7 +8,7 @@ interface OscillationCanvasProps {
 
 const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
   initialAmplitude = 100,
-  initialFrequency = 1,
+  initialFrequency = 1
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [amplitude, setAmplitude] = useState(initialAmplitude);
@@ -26,8 +26,8 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
 
     // アニメーションが一時停止中の場合は描画ループを停止
     if (!isPlaying) {
-        animationFrameIdRef.current = null;
-        return;
+      animationFrameIdRef.current = null;
+      return;
     }
 
     // 経過時間 (秒) の計算
@@ -125,55 +125,54 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
 
     // useEffectのクリーンアップ関数でアニメーションを確実に停止
     return () => {
-        if (animationFrameIdRef.current) {
-            cancelAnimationFrame(animationFrameIdRef.current);
-        }
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
     };
   }, [initialAmplitude, initialFrequency]);
 
   // isPlayingの状態が変化したときにアニメーションを開始/停止する専用のuseEffect
   useEffect(() => {
-      if (isPlaying) {
-          // 再生時にはアニメーションループを開始
-          animationFrameIdRef.current = requestAnimationFrame(animate);
-      } else {
-          // 一時停止時にはアニメーションループを停止
-          if (animationFrameIdRef.current) {
-              cancelAnimationFrame(animationFrameIdRef.current);
-              animationFrameIdRef.current = null;
-          }
+    if (isPlaying) {
+      // 再生時にはアニメーションループを開始
+      animationFrameIdRef.current = requestAnimationFrame(animate);
+    } else {
+      // 一時停止時にはアニメーションループを停止
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
       }
-      // cleanup function for this useEffect specific to animation frame management
-      return () => {
-        if(animationFrameIdRef.current){
-          cancelAnimationFrame(animationFrameIdRef.current);
-          animationFrameIdRef.current = null;
-        }
+    }
+    // cleanup function for this useEffect specific to animation frame management
+    return () => {
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+        animationFrameIdRef.current = null;
       }
+    };
   }, [isPlaying, animate]);
 
-
   const handlePlayPause = () => {
-      setIsPlaying(prevIsPlaying => {
-          if (prevIsPlaying) {
-              // 現在再生中であれば一時停止
-              // 経過時間をpausedTimeRefに加算
-              pausedTimeRef.current = pausedTimeRef.current + (Date.now() - startTime);
-          } else {
-              // 現在一時停止中であれば再生再開
-              // 新しいstartTimeを設定することで、一時停止した時点からの時間を継続
-              setStartTime(Date.now());
-          }
-          return !prevIsPlaying; // isPlayingの状態を反転
-      });
+    setIsPlaying((prevIsPlaying) => {
+      if (prevIsPlaying) {
+        // 現在再生中であれば一時停止
+        // 経過時間をpausedTimeRefに加算
+        pausedTimeRef.current = pausedTimeRef.current + (Date.now() - startTime);
+      } else {
+        // 現在一時停止中であれば再生再開
+        // 新しいstartTimeを設定することで、一時停止した時点からの時間を継続
+        setStartTime(Date.now());
+      }
+      return !prevIsPlaying; // isPlayingの状態を反転
+    });
   };
 
   const handleReset = () => {
-      setAmplitude(initialAmplitude);
-      setAngularFrequency(initialFrequency);
-      setStartTime(Date.now()); // 時間をリセット
-      pausedTimeRef.current = 0; // 一時停止時間もリセット
-      setIsPlaying(true); // 再生状態に戻す
+    setAmplitude(initialAmplitude);
+    setAngularFrequency(initialFrequency);
+    setStartTime(Date.now()); // 時間をリセット
+    pausedTimeRef.current = 0; // 一時停止時間もリセット
+    setIsPlaying(true); // 再生状態に戻す
   };
 
   return (
@@ -184,9 +183,7 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
           <tbody>
             <tr>
               <td>
-                <label htmlFor="amplitude">
-                  振幅（円の半径）
-                </label>
+                <label htmlFor="amplitude">振幅（円の半径）</label>
               </td>
               <td>：</td>
               <td>
@@ -211,9 +208,7 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
             </tr>
             <tr>
               <td>
-                <label htmlFor="frequency">
-                  角振動数
-                </label>
+                <label htmlFor="frequency">角振動数</label>
               </td>
               <td>：</td>
               <td>
@@ -239,13 +234,37 @@ const OscillationCanvas: React.FC<OscillationCanvasProps> = ({
         </table>
         <div className={styles.buttonList}>
           <button className={styles.button} onClick={handleReset}>
-            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="24px"
+              viewBox="0 -960 960 960"
+              width="24px"
+              fill="currentColor"
+            >
+              <path d="M440-122q-121-15-200.5-105.5T160-440q0-66 26-126.5T260-672l57 57q-38 34-57.5 79T240-440q0 88 56 155.5T440-202v80Zm80 0v-80q87-16 143.5-83T720-440q0-100-70-170t-170-70h-3l44 44-56 56-140-140 140-140 56 56-44 44h3q134 0 227 93t93 227q0 121-79.5 211.5T520-122Z" />
+            </svg>
           </button>
           <button className={styles.button} onClick={handlePlayPause}>
             {isPlaying ? (
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M320-640v320-320Zm-80 400v-480h480v480H240Zm80-80h320v-320H320v320Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="currentColor"
+              >
+                <path d="M320-640v320-320Zm-80 400v-480h480v480H240Zm80-80h320v-320H320v320Z" />
+              </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z"/></svg>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 -960 960 960"
+                width="24px"
+                fill="currentColor"
+              >
+                <path d="M320-200v-560l440 280-440 280Zm80-280Zm0 134 210-134-210-134v268Z" />
+              </svg>
             )}
           </button>
         </div>
