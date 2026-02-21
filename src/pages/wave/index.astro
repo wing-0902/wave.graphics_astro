@@ -10,17 +10,17 @@ const sortedWaveEntries = waveEntries.sort((a, b) => {
   return b.data.num - a.data.num;
 });
 
-const title = '並の模型一覧 | Wave Graphics'
-const description = 'Wave Graphicsでは，様々な波の様子を御覧いただけます．'
+const title = '並の模型一覧 | Wave Graphics';
+const description = 'Wave Graphicsでは，様々な波の様子を御覧いただけます．';
 ---
 
 <Fragment slot="head">
   <title>{title}</title>
-  <meta name='description' content={description} />
+  <meta name="description" content={description} />
 
   <!-- og tags -->
-  <meta property='og:title' content={title} />
-  <meta property='og:description' content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
 </Fragment>
 
 <HeaderLayout>

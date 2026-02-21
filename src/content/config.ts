@@ -1,5 +1,5 @@
 // 1. `astro:content`からユーティリティをインポート
-import { z, defineCollection } from 'astro:content';
+import { z, defineCollection, image } from 'astro:content';
 
 // 2. コレクションを定義
 const waveCollection = defineCollection({
@@ -10,7 +10,8 @@ const waveCollection = defineCollection({
     pubDate: z.date(),
     num: z.number(),
     pairName: z.string().optional(),
-    pairPath: z.string().optional()
+    pairPath: z.string().optional(),
+    ogImage: image().optional()
   })
 });
 
@@ -19,7 +20,8 @@ const policyCollection = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    lastUpdated: z.date()
+    lastUpdated: z.date(),
+    ogImage: image().optional()
   })
 });
 
@@ -32,7 +34,8 @@ const frameworkCollection = defineCollection({
     siteUrl: z.string(),
     githubUrl: z.string(),
     icon: z.string().default('/hotlink-ok/icons/favicon.png'),
-    themeColor: z.string().default('#888eff')
+    themeColor: z.string().default('#888eff'),
+    ogImage: image().optional()
   })
 });
 

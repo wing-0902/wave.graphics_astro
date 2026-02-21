@@ -15,14 +15,11 @@ interface Props {
 const {
   ogType = 'website',
   hideCurrentPath = false,
-  anotherFavicon = '/hotlink-ok/icons/favicon.png',
+  anotherFavicon = '/hotlink-ok/icons/favicon.png'
 } = Astro.props;
 ---
 
-<RootLayout
-  anotherFavicon={anotherFavicon}
-  ogType={ogType}
->
+<RootLayout anotherFavicon={anotherFavicon} ogType={ogType}>
   <Header />
   <div class="slotDiv">
     {!hideCurrentPath && <CurrentPathOnSSG />}

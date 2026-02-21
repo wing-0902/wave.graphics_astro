@@ -22,16 +22,15 @@ const titleOnHeader = entry.data.title + ' | Wave Graphics';
 
 <Fragment slot="head">
   <title>{titleOnHeader}</title>
-  <meta name='description' content={entry.data.description} />
+  <meta name="description" content={entry.data.description} />
 
   <!-- og tags -->
-  <meta property='og:title' content={titleOnHeader} />
-  <meta property='og:description' content={entry.data.description} />
+  <meta property="og:title" content={titleOnHeader} />
+  <meta property="og:description" content={entry.data.description} />
 
   <!-- Twitter Tags -->
-  <meta name='twitter:title' content={titleOnHeader} />
-  <meta name='twitter:description' content={entry.data.description} />
-
+  <meta name="twitter:title" content={titleOnHeader} />
+  <meta name="twitter:description" content={entry.data.description} />
 </Fragment>
 
 <HeaderLayout ogType="article">

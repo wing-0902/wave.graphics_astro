@@ -22,13 +22,10 @@ import AboutWidget from '../../components/FrameworkUI/AboutWidget.svelte';
 
 <Fragment slot="head">
   <title>{titleOnHeader}</title>
-  <meta name='description' content={entry.data.description} />
+  <meta name="description" content={entry.data.description} />
 </Fragment>
 
-<HeaderLayout
-  anotherFavicon={entry.data.icon}
-  ogType="article"
->
+<HeaderLayout anotherFavicon={entry.data.icon} ogType="article">
   <h2 data-pagefind-meta="title">{entry.data.title}</h2>
   <div class="descriptionSlot">
     <p>{entry.data.description}</p>

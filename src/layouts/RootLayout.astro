@@ -1,8 +1,9 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
-  anotherFavicon?: string;
+  ogImage?: ImageMetadata | string;
   ogType?: string;
 }
 
@@ -10,12 +11,11 @@ interface Props {
 import 'katex/dist/katex.min.css';
 
 // Propsでメタタグを受け渡し
-const {
-  ogType = 'website',
-  anotherFavicon = 'https://wave.graphics/hotlink-ok/icons/favicon.png',
-} = Astro.props;
+const { ogType = 'website', ogImage = 'https://wave.graphics/hotlink-ok/icons/favicon.png' } =
+  Astro.props;
 
 const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
+const imageUrl = typeof ogImage === 'string' ? ogImage : ogImage.src;
 ---
 
 <!doctype html>
@@ -36,10 +36,10 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <!-- アイコン -->
     <link rel="apple-touch-icon" href="/hotlink-ok/icons/favicon.png" />
     <link rel="icon" href="/hotlink-ok/icons/favicon.png" />
-    <meta data-pagefind-default-meta="image[content]" content={anotherFavicon} />
+    <meta data-pagefind-default-meta="image[content]" content={imageUrl} />
 
     <!-- SNS -->
-    <meta property="og:image" content={anotherFavicon} />
+    <meta property="og:image" content={imageUrl} />
     <meta property="og:url" content={正規URL} />
     <meta property="og:site_name" content="Wave Graphics" />
     <meta property="og:type" content={ogType} />
@@ -48,7 +48,7 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@wing__0902" />
     <meta name="twitter:domain" content="wave.graphics" />
-    <meta name="twitter:image" content={anotherFavicon} />
+    <meta name="twitter:image" content={imageUrl} />
 
     <!-- Astro -->
     <ClientRouter />
