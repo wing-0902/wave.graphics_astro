@@ -20,10 +20,22 @@ const sortedFrameworkEntries = frameworkEntries.sort((a, b) => {
 });
 
 const firstFiveFrameworkEntries = sortedFrameworkEntries.slice(0, 5);
+
+const title = 'Wave Graphics App by Wing';
+const description = 'Wave Graphics App by Wingでは，様々な波の模型をブラウザで閲覧できます．';
 ---
 
 <Fragment slot="slot">
-  <title>Wave Graphics App by Wing</title>
+  <title>{title}</title>
+  <meta name='description' content={description} />
+
+  <!-- og tags -->
+  <meta property='og:title' content={title} />
+  <meta property='og:description' content={description} />
+
+  <!-- Twitter Tags -->
+  <meta name='twitter:title' content={title} />
+  <meta name='twitter:description' content={description} />
 </Fragment>
 
 <HeaderLayout>

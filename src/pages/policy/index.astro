@@ -4,14 +4,25 @@ import HeaderLayout from '../../layouts/HeaderLayout.astro';
 import { getCollection } from 'astro:content';
 const policyEntries = await getCollection('policy');
 policyEntries.sort((a, b) => b.data.lastUpdated.getTime() - a.data.lastUpdated.getTime()); // 日付順
+
+const title = '利用規約一覧 | Wave Graphics'
+const description = '当アプリを利用いただくにあたって，いくつかのルールを守っていただく必要があります．コンテンツの適正かつ有用な活用のため，ご協力をお願いします．';
 ---
 
 <Fragment slot="head">
   <title>利用規約一覧 | Wave Graphics</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- og tags -->
+  <meta property='og:title' content={title} />
+  <meta property='og:description' content={description} />
+
+  <!-- twitter tags -->
+  <meta name='twitter:title' content={title} />
+  <meta name='twitter:description' content={description} />
 </Fragment>
 
 <HeaderLayout
-  description="Wave Graphics Appでは，コンテンツの適正かつ有益な利用のため，いくつかのルールを儲けさせていただいております．"
 >
   <h2 data-pagefind-meta="title">ご利用規約一覧</h2>
   <div class="subSlot">

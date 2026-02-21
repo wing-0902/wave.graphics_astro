@@ -20,9 +20,14 @@ const titleOnHeader = entry.data.title + ' | Wave Graphics';
 
 <Fragment slot="head">
   <title>{titleOnHeader}</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- og tags -->
+  <meta property='og:title' content={titleOnHeader} />
+  <meta property='og:description' content={entry.data.description} />
 </Fragment>
 
-<HeaderLayout description={entry.data.description} ogType="article">
+<HeaderLayout ogType="article">
   <h2 data-pagefind-meta="title">{entry.data.title}</h2>
   <div class="descriptionSlot">
     <time datetime={entry.data.lastUpdated.toISOString()}>

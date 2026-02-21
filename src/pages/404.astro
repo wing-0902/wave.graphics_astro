@@ -5,9 +5,10 @@ import CurrentPathOn404 from '../components/LayoutUI/CurrentPathOn404.svelte';
 
 <Fragment slot="head">
   <title>404 Not Found | Wave Graphics</title>
+  <meta name="robots" content="noindex">
 </Fragment>
 
-<HeaderLayout noindex={true} hideCurrentPath={true}>
+<HeaderLayout hideCurrentPath={true}>
   <section data-pagefind-ignore="all">
     <CurrentPathOn404 client:load />
     <h2>404 Not Found</h2>

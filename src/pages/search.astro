@@ -2,10 +2,18 @@
 import HeaderLayout from '../layouts/HeaderLayout.astro';
 
 import SearchSlot from '../components/SearchUI/SearchSlot.vue';
+
+const title = '検索 | Wave Graphics';
+const description = 'Wave Graphicsでは，様々な波の様子を御覧いただけます．'
 ---
 
 <Fragment slot="head">
-  <title>検索 | Wave Graphics</title>
+  <title>{title}</title>
+  <meta name="robots" content="noindex" />
+
+  <!-- og tags -->
+  <meta property='og:title' content={title} />
+  <meta property='og:description' content={description} />
 </Fragment>
 
 <HeaderLayout>

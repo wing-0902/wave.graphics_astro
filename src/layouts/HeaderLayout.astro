@@ -7,29 +7,20 @@ import CurrentPathOnSSG from '../components/LayoutUI/CurrentPathOnSSG.astro';
 import BackToTop from '../components/LayoutUI/BackToTop.vue';
 
 interface Props {
-  title?: string;
-  description?: string;
   anotherFavicon?: string;
-  noindex?: boolean;
   hideCurrentPath?: boolean;
   ogType?: string;
 }
 
 const {
   ogType = 'website',
-  noindex = false,
   hideCurrentPath = false,
   anotherFavicon = '/hotlink-ok/icons/favicon.png',
-  title = 'Wave Graphics',
-  description = 'Wave Graphicsアプリへようこそ！このアプリでは，物理の授業で出てきそうな，波の模型をデジタル化し，ウェブで閲覧可能にしたものです．'
 } = Astro.props;
 ---
 
 <RootLayout
-  title={title}
-  description={description}
   anotherFavicon={anotherFavicon}
-  noindex={noindex}
   ogType={ogType}
 >
   <Header />

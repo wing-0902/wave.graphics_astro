@@ -22,10 +22,10 @@ import AboutWidget from '../../components/FrameworkUI/AboutWidget.svelte';
 
 <Fragment slot="head">
   <title>{titleOnHeader}</title>
+  <meta name='description' content={entry.data.description} />
 </Fragment>
 
 <HeaderLayout
-  description={entry.data.description}
   anotherFavicon={entry.data.icon}
   ogType="article"
 >

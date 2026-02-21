@@ -2,10 +2,7 @@
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
-  title?: string;
-  description?: string;
   anotherFavicon?: string;
-  noindex?: boolean;
   ogType?: string;
 }
 
@@ -15,10 +12,7 @@ import 'katex/dist/katex.min.css';
 // Propsでメタタグを受け渡し
 const {
   ogType = 'website',
-  noindex = false,
   anotherFavicon = 'https://wave.graphics/hotlink-ok/icons/favicon.png',
-  title = 'Wave Graphics',
-  description = 'Wave Graphicsアプリへようこそ！このアプリでは，物理の授業で出てきそうな，波の模型をデジタル化し，ウェブで閲覧可能にしたものです．'
 } = Astro.props;
 
 const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
@@ -36,9 +30,7 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <slot name="head" />
 
     <!-- SEO対策とメタタグ -->
-    <meta name="description" content={description} />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    {noindex && <meta name="robots" content="noindex" />}
     <link rel="canonical" href={正規URL} />
 
     <!-- アイコン -->
@@ -47,8 +39,6 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <meta data-pagefind-default-meta="image[content]" content={anotherFavicon} />
 
     <!-- SNS -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
     <meta property="og:image" content={anotherFavicon} />
     <meta property="og:url" content={正規URL} />
     <meta property="og:site_name" content="Wave Graphics" />
@@ -58,8 +48,6 @@ const 正規URL = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@wing__0902" />
     <meta name="twitter:domain" content="wave.graphics" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={anotherFavicon} />
 
     <!-- Astro -->
