@@ -1,5 +1,6 @@
 ---
 import RootLayout from './RootLayout.astro';
+import type { ImageMetadata } from 'astro';
 
 import Footer from '../components/LayoutUI/Footer.astro';
 import Header from '../components/LayoutUI/Header.astro';
@@ -7,19 +8,15 @@ import CurrentPathOnSSG from '../components/LayoutUI/CurrentPathOnSSG.astro';
 import BackToTop from '../components/LayoutUI/BackToTop.vue';
 
 interface Props {
-  anotherFavicon?: string;
+  ogImage?: ImageMetadata | string;
   hideCurrentPath?: boolean;
   ogType?: string;
 }
 
-const {
-  ogType = 'website',
-  hideCurrentPath = false,
-  anotherFavicon = '/hotlink-ok/icons/favicon.png'
-} = Astro.props;
+const { ogType = 'website', hideCurrentPath = false, ogImage } = Astro.props;
 ---
 
-<RootLayout anotherFavicon={anotherFavicon} ogType={ogType}>
+<RootLayout ogImage={ogImage} ogType={ogType}>
   <Header />
   <div class="slotDiv">
     {!hideCurrentPath && <CurrentPathOnSSG />}

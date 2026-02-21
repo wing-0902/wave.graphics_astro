@@ -5,6 +5,9 @@
   "compilerOptions": {
     "jsx": "preserve",
     "jsxImportSource": "react",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "paths": {
+      "@components/*": ["src/components/*"]
+    }
   }
 }
