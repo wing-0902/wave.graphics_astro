@@ -1,42 +1,45 @@
 // 1. `astro:content`からユーティリティをインポート
-import { z, defineCollection, image } from 'astro:content';
+import { z, defineCollection } from 'astro:content';
 
 // 2. コレクションを定義
 const waveCollection = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    pubDate: z.date(),
-    num: z.number(),
-    pairName: z.string().optional(),
-    pairPath: z.string().optional(),
-    ogImage: image().optional()
-  })
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      pubDate: z.date(),
+      num: z.number(),
+      pairName: z.string().optional(),
+      pairPath: z.string().optional(),
+      ogImage: image().optional()
+    })
 });
 
 const policyCollection = defineCollection({
   type: 'content', // v2.5.0以降
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    lastUpdated: z.date(),
-    ogImage: image().optional()
-  })
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      lastUpdated: z.date(),
+      ogImage: image().optional()
+    })
 });
 
 const frameworkCollection = defineCollection({
   type: 'content',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    num: z.number(),
-    siteUrl: z.string(),
-    githubUrl: z.string(),
-    icon: z.string().default('/hotlink-ok/icons/favicon.png'),
-    themeColor: z.string().default('#888eff'),
-    ogImage: image().optional()
-  })
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      num: z.number(),
+      siteUrl: z.string(),
+      githubUrl: z.string(),
+      icon: z.string().default('/hotlink-ok/icons/favicon.png'),
+      themeColor: z.string().default('#888eff'),
+      ogImage: image().optional()
+    })
 });
 
 // 3. コレクションを登録するために、単一の`collections`オブジェクトをエクスポート
