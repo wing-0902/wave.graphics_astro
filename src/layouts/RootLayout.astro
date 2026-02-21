@@ -1,5 +1,4 @@
 ---
-import { ClientRouter } from 'astro:transitions';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
@@ -49,12 +48,9 @@ const imageUrl = typeof ogImage === 'string' ? ogImage : ogImage.src;
     <meta name="twitter:site" content="@wing__0902" />
     <meta name="twitter:domain" content="wave.graphics" />
     <meta name="twitter:image" content={imageUrl} />
-
-    <!-- Astro -->
-    <ClientRouter />
   </head>
   <body>
-    <slot transition:animate="fade" />
+    <slot />
   </body>
 </html>
 
